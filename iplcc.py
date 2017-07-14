@@ -28,8 +28,26 @@ import scipy.misc
 import numpy as np
 import os 
 import sys
-sys.path.append('/home/mpcr/newproject/venv/lib/python2.7/site-packages')
+
+from __future__ import print_function
 import tensorflow as tf
+
+import TensorflowUtils as utils
+import DataParser as scene_parsing
+import datetime
+import BatchDatasetReader as dataset
+from six.moves import xrange
+
+FLAGS = tf.flags.FLAGS
+tf.flags.DEFINE_string("gpu", "0", "which gpu to use")
+tf.flags.DEFINE_integer("batch_size", "2", "batch size for training")
+tf.flags.DEFINE_string("cpkt_dir", "./checkpoints/", "path to logs directory")
+tf.flags.DEFINE_string("data_dir", "./data/match/", "path to dataset")
+tf.flags.DEFINE_string("preds_dir", "./data/match/preds/", "path to output predictions")
+tf.flags.DEFINE_float("learning_rate", "1e-4", "Learning rate for Adam Optimizer")
+tf.flags.DEFINE_string("model_dir", "Model/", "Path to model mat")
+tf.flags.DEFINE_bool('debug', "True", "Debug mode: True/ False")
+tf.flags.DEFINE_string('mode', "train", "Mode train/ test/ visualize/ infer")
 
 
 # load data and ground truth
