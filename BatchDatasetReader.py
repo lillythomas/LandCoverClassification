@@ -16,6 +16,7 @@ class BatchDatset:
     image_options = {}
     batch_offset = 0
     epochs_completed = 0
+    ps = 4 
 
     def __init__(self, records_list, image_options={}, infer_else=False):
         """
@@ -165,6 +166,8 @@ class BatchDatset:
             np.random.shuffle(perm)
             self.images = self.images[perm]
             self.annotations = self.annotations[perm]
+            self.images=np.pad(self.images, (ps, ps), 'edge') # pad the data matrix to select patches
+            self.annotations=np.pad(self.annotations, (ps, ps), 'edge') # pad the data matrix to select patches
             # Start next epoch
             start = 0
             self.batch_offset = batch_size
